@@ -2,6 +2,7 @@ package com.example.sergiorodriguez.venalau_app;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,8 +36,11 @@ public class ReservasActivity extends AppCompatActivity {
 
     Spinner spEspacio;
     FillList espacios;
-    private TextView txtFecha;
+    private TextView txtFecha,txtHora;
+    int horas,minutos;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TimePickerDialog.OnTimeSetListener mHourSetListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +74,37 @@ public class ReservasActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month=month+1;
 
-                String date=month+"/"+day+"/"+year;
+                String date=month+"-"+day+"-"+year;
                 txtFecha.setText(date);
             }
         };
 
+        txtHora=(TextView)findViewById(R.id.txtHora);
+        txtHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int hora=cal.get(Calendar.HOUR_OF_DAY);
+                int minutos=cal.get(Calendar.MINUTE);
+
+               TimePickerDialog dialog=new TimePickerDialog(
+                        ReservasActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mHourSetListener,
+                        hora,minutos,false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        mHourSetListener=new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int min) {
+
+
+                String time=hour+":"+min;
+                txtHora.setText(time);
+            }
+        };
 
 
     }
