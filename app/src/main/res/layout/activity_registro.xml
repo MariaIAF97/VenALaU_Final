@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VenALaU"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registro de Usuarios"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txIdInst"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="ID Institucional" />
+
+        <!--
+        <EditText
+            android:id="@+id/txTipoVinculo"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="TipoVinculo" />
+            -->
+        <Spinner
+            android:id="@+id/spVinculo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></Spinner>
+
+        <EditText
+            android:id="@+id/txNombre"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Nombre" />
+
+        <EditText
+            android:id="@+id/txApellido"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Apellido" />
+
+
+        <EditText
+            android:id="@+id/txCorreo"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Correo" />
+
+        <EditText
+            android:id="@+id/txCont"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="Contraseña"
+            android:inputType="textPassword" />
+
+
+        <!--
+        <EditText
+            android:id="@+id/txCantMul"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:hint="CantidadMultas" />
+        -->
+
+        <Button
+            android:id="@+id/btnRegistrarse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttonstylegreen"
+            android:text="Registrarse"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+</LinearLayout>

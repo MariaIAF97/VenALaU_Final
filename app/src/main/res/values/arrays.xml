@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vinculoArray">
+        <item>Tipo de Vínculo</item>
+        <item>Estudiante Pregrado</item>
+        <item>Estudiante Postgrado</item>
+        <item>Estudiante Colegio</item>
+        <item>Docente Interno</item>
+        <item>Docente cátedra</item>
+        <item>Administrativo</item>
+        <item>Empleado</item>
+    </string-array>
+</resources>

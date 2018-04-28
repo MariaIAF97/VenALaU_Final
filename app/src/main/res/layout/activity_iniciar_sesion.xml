@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IniciarSesionActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VenALaU"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inicia sesión para acceder a todas las funcionalidades de VenALaU"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:drawableLeft="@drawable/ic_icon_user"
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:hint="ID Institucional"/>
+        <EditText
+            android:drawableLeft="@drawable/ic_icon_pass"
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:hint="Contraseña"
+            android:inputType="textPassword"/>
+        <Button
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonstylegreen"
+            android:text="Iniciar Sesión"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
+
+</LinearLayout>
