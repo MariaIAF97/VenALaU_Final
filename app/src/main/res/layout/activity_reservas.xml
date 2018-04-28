@@ -42,15 +42,18 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:hint="Nombre"
+            android:editable="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"/>
+            android:hint="Apellido"
+            android:editable="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID Institucional"/>
+            android:hint="ID Institucional"
+            android:editable="false"/>
 
         <Spinner
             android:id="@+id/spEspacio"

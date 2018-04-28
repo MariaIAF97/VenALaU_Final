@@ -4,7 +4,7 @@
 
     <uses-sdk
         android:minSdkVersion="18"
-        android:targetSdkVersion="27"></uses-sdk>
+        android:targetSdkVersion="27" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="portrait" />
@@ -53,8 +53,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventosActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".EventosActivity"></activity>
     </application>
 
 </manifest>
