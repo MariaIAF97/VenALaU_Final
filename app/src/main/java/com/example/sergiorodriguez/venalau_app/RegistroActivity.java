@@ -10,36 +10,36 @@ import android.widget.Spinner;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    EditText Nombre;
-    EditText Apellido;
-    EditText IdIns;
+    EditText etNombre;
+    EditText etApellido;
+    EditText etIdIns;
     //EditText TipoVinculo;
-    EditText Correo;
-    EditText Cont;
+    EditText etCorreo;
+    EditText etCont;
     //EditText CantMul;
-    Button Registrarse;
+    Button btnRegistrarse;
     String contenidoSpinner;
-    Spinner Vinculos;
+    Spinner spVinculos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        Nombre = (EditText)findViewById(R.id.txNombre);
-        IdIns = (EditText)findViewById(R.id.txIdInst);
-        Apellido = (EditText)findViewById(R.id.txApellido);
+        etApellido = (EditText)findViewById(R.id.txNombre);
+        etIdIns = (EditText)findViewById(R.id.txIdInst);
+        etIdIns = (EditText)findViewById(R.id.txApellido);
         //TipoVinculo = (EditText)findViewById(R.id.txTipoVinculo);
-        Correo = (EditText)findViewById(R.id.txCorreo);
-        Cont = (EditText)findViewById(R.id.txCont);
+        etCorreo = (EditText)findViewById(R.id.txCorreo);
+        etCont = (EditText)findViewById(R.id.txCont);
         //CantMul = (EditText)findViewById(R.id.txCantMul);
-        Registrarse = (Button)findViewById(R.id.btnRegistrarse);
+        btnRegistrarse = (Button)findViewById(R.id.btnRegistrarse);
 
 
-        Vinculos = (Spinner) findViewById(R.id.spVinculo);
+        spVinculos = (Spinner) findViewById(R.id.spVinculo);
         ArrayAdapter spinner_adapter = ArrayAdapter.createFromResource( this, R.array.vinculoArray , android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Vinculos.setAdapter(spinner_adapter);
+        spVinculos.setAdapter(spinner_adapter);
 
 
 
