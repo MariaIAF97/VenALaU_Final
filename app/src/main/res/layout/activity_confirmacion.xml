@@ -43,27 +43,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre"
-            android:editable="false"/>
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ID Institucional"
-            android:editable="false"/>
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Fecha"
-            android:editable="false"/>
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Hora"
-            android:editable="false"/>
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Lugar"
-            android:editable="false"/>
+            android:enabled="false"/>
 
         <Button
             android:layout_marginTop="40dp"

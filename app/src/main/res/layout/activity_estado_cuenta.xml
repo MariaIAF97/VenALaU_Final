@@ -42,27 +42,33 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"/>
+            android:hint="Nombre"
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"/>
+            android:hint="Apellido"
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID Institucional"/>
+            android:hint="ID Institucional"
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Espacio Reservado"/>
+            android:hint="Espacio Reservado"
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha de la reserva"/>
+            android:hint="Fecha de la reserva"
+            android:enabled="false"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hora de la reserva"/>
+            android:hint="Hora de la reserva"
+            android:enabled="false"/>
 
 
 
