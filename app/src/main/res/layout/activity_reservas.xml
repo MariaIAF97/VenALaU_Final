@@ -39,21 +39,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <EditText
+            android:id="@+id/txtNombreReserva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="Nombre" />
+
         <EditText
+            android:id="@+id/txtApellidoReserva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Apellido"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="Apellido" />
+
         <EditText
+            android:id="@+id/txtIdReserva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID Institucional"
-            android:enabled="false"/>
+            android:hint="ID Institucional" />
 
         <Spinner
             android:id="@+id/spEspacio"

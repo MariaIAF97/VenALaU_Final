@@ -120,6 +120,7 @@ public class RegistroActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
+
     //Consultas
 
     //Inicia llenado de Spinner desde la API

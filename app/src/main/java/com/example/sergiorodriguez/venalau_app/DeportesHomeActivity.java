@@ -29,7 +29,7 @@ public class DeportesHomeActivity extends AppCompatActivity {
         llReservas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(DeportesHomeActivity.this,ReservasActivity.class);
+                Intent intent =new Intent(DeportesHomeActivity.this,IniciarSesionActivity.class);
                 startActivity(intent);
             }
         });

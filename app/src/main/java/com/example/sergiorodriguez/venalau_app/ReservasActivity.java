@@ -4,43 +4,52 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class ReservasActivity extends AppCompatActivity {
-
     Spinner spEspacio;
     FillList espacios;
-    private TextView txtFecha,txtHora;
+    private TextView txtFecha,txtHora,txtId,txtNombre,txtApellido;
+    Button btnReserva;
     int horas,minutos;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mHourSetListener;
-
+    String horaFecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +60,10 @@ public class ReservasActivity extends AppCompatActivity {
         Log.d("creado","creado");
         espacios=new FillList();
         espacios.execute();
-
+        txtId=(TextView)findViewById(R.id.txtIdReserva);
+        btnReserva=(Button)findViewById(R.id.btnReservar);
+        txtNombre=(TextView)findViewById(R.id.txtNombreReserva);
+        txtApellido=(TextView)findViewById(R.id.txtApellidoReserva);
         txtFecha=(TextView)findViewById(R.id.txtFecha);
         txtFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +87,7 @@ public class ReservasActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month=month+1;
 
-                String date=month+"-"+day+"-"+year;
+                String date=year+"-"+month+"-"+day;
                 txtFecha.setText(date);
             }
         };
@@ -88,7 +100,7 @@ public class ReservasActivity extends AppCompatActivity {
                 int hora=cal.get(Calendar.HOUR_OF_DAY);
                 int minutos=cal.get(Calendar.MINUTE);
 
-               TimePickerDialog dialog=new TimePickerDialog(
+                TimePickerDialog dialog=new TimePickerDialog(
                         ReservasActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mHourSetListener,
@@ -102,11 +114,38 @@ public class ReservasActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
 
 
-                String time=hour+":"+min;
+                String time=hour+":0"+min+":00.000";
                 txtHora.setText(time);
             }
         };
 
+
+        btnReserva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent =new Intent(ReservasActivity.this,ConfirmacionActivity.class);
+
+                /*String nombre=txtNombre.getText().toString();
+                String apellido=txtApellido.getText().toString();
+                String fecha=txtFecha.getText().toString();
+                String hora=txtHora.getText().toString();
+                int id=Integer.parseInt(txtId.getText().toString());
+                int tipoEspacio=spEspacio.getSelectedItemPosition()+1;
+                String nombreEspacio=spEspacio.getSelectedItem().toString();
+
+                intent.putExtra("nombre",nombre);
+                intent.putExtra("apellido",apellido);
+                intent.putExtra("fecha",fecha);
+                intent.putExtra("hora",hora);
+                intent.putExtra("id",id);
+                intent.putExtra("tipoEspacio",tipoEspacio);
+                intent.putExtra("nombreEspacio",nombreEspacio);*/
+
+
+                //startActivity(intent);
+                agregarReserva();
+            }
+        });
 
     }
 
@@ -134,7 +173,7 @@ public class ReservasActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... params){
             try{
-                URL Url=new URL("http://venalau.azurewebsites.net/api/espacio/findAll");
+                URL Url=new URL("http://venalau.azurewebsites.net/api/tipoEspacio/findAll");
                 HttpURLConnection connection=(HttpURLConnection) Url.openConnection();
                 InputStream is=connection.getInputStream();
                 BufferedReader br=new BufferedReader(new InputStreamReader(is));
@@ -162,7 +201,7 @@ public class ReservasActivity extends AppCompatActivity {
                 JSONArray jArray=new JSONArray(result);
                 for(int i=0;i<jArray.length();i++){
                     JSONObject jObject = jArray.getJSONObject(i);
-                    String tipo=jObject.getString("tipo");
+                    String tipo=jObject.getString("tipoEspacio");
                     lista.add(tipo);
                 }
                 this.progressDialog.dismiss();
@@ -175,4 +214,44 @@ public class ReservasActivity extends AppCompatActivity {
         }
 
     }
+
+    //Insertar reserva
+    public Connection conexionDB(){
+        Connection conexion = null;
+        try{
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
+            conexion = DriverManager.getConnection("jdbc:jtds:sqlserver://venalau.database.windows.net;port=1433;databaseName=VenALaUDB;user=adminvenalau;password=venalau2018!;");
+        }
+
+        catch(Exception ex){
+            Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+        return conexion;
+    }
+
+    public void agregarReserva(){
+        horaFecha=txtFecha.getText().toString()+" "+txtHora.getText().toString();
+
+        try{
+
+
+            PreparedStatement pst = conexionDB().prepareStatement("insert into miu.Reserva values(?,?,?)");
+            pst.setString(1,horaFecha);
+            pst.setInt(2,Integer.parseInt(txtId.getText().toString()));
+            pst.setInt(3,spEspacio.getSelectedItemPosition()+1);
+
+
+
+            pst.executeUpdate();
+
+            conexionDB().close();
+        }
+
+        catch(SQLException ex){
+            Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

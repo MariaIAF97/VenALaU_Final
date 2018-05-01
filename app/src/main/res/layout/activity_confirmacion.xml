@@ -39,31 +39,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <EditText
+            android:id="@+id/txNombreConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="Nombre" />
         <EditText
+            android:id="@+id/txApellidoConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID Institucional"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="Apellido" />
+
         <EditText
+            android:id="@+id/txtIdConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="ID Institucional" />
+
         <EditText
+            android:id="@+id/txtFechaConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Hora"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="Fecha" />
+
         <EditText
+            android:id="@+id/txtHoraConf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Lugar"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:hint="Hora" />
+
+        <EditText
+            android:id="@+id/txtLugarConf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="Lugar" />
 
         <Button
             android:layout_marginTop="40dp"

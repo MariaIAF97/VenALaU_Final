@@ -57,9 +57,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".EventosActivity" />
-        <activity
-            android:name=".IniciarSesionActivity"
-            android:label="@string/title_activity_iniciar_sesion"></activity>
+        <activity android:name=".IniciarSesionActivity"></activity>
     </application>
 
 </manifest>
