@@ -2,13 +2,16 @@ package com.example.sergiorodriguez.venalau_app;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,21 +30,62 @@ public class EventosActivity extends AppCompatActivity {
     ListView lvEventos;
     FillListEventos eventos;
 
+    FillSpinner seventos;
+    Spinner mySpinner;
+    String text;
+    String datoLista;
+
+    int selected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("creado","creado");
         setContentView(R.layout.activity_eventos);
+
         lvEventos=(ListView)findViewById(R.id.lvEventos);
         Log.d("creado","creado");
-        eventos=new FillListEventos();
-        eventos.execute();
+        mySpinner=(Spinner) findViewById(R.id.spTipoEvento);
+        seventos = new FillSpinner();
+        seventos.execute();
+
+        //Creamos el adaptador
+        /*ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.departamento,android.R.layout.simple_spinner_item);
+        //Añadimos el layout para el menú
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Le indicamos al spinner el adaptador a usar
+        mySpinner.setAdapter(adapter);*/
+        //text = prueba.getSelectedItem().toString();
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=-1) {
+                    selected = mySpinner.getSelectedItemPosition();
+                    //selected = parent.getSelectedItem();
+                    eventos = new FillListEventos();
+                    eventos.execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+
+        });
+
+        //eventos.execute();
+
+
     }
 
-    class FillListEventos extends AsyncTask<String,String,Void>{
+
+    class FillListEventos extends AsyncTask<String,String, Void> {
         private ProgressDialog progressDialog=new ProgressDialog(EventosActivity.this);
         InputStream inputStream=null;
         String result="";
+
 
         public FillListEventos(){
 
@@ -62,7 +106,11 @@ public class EventosActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... params){
             try{
-                URL Url=new URL("http://venalau.azurewebsites.net/api/eventos/findAll");
+
+
+                //String UrlConvert=URLEncoder.encode(selected, "utf-8");
+                URL Url=new URL("https://venalau.azurewebsites.net/api/eventos/find/"+(selected+1));
+                //Log.d("URL","https://venalau.azurewebsites.net/api/evento/find/"+UrlConvert);
                 HttpURLConnection connection=(HttpURLConnection) Url.openConnection();
                 InputStream is=connection.getInputStream();
                 BufferedReader br=new BufferedReader(new InputStreamReader(is));
@@ -86,21 +134,147 @@ public class EventosActivity extends AppCompatActivity {
 
         protected  void onPostExecute(Void v){
             List<String> listaEventos=new ArrayList<>();
-            try{
-                JSONArray jArray=new JSONArray(result);
-                for(int i=0;i<jArray.length();i++){
+            /*try{
+                JSONObject jObject = new JSONObject(result);
+                String nombreEvento=jObject.getString("nombre");
+                listaEventos.add(nombreEvento);
+                this.progressDialog.dismiss();*/
+            try {
+                JSONArray jArray = new JSONArray(result);
+                for(int i=0; i < jArray.length(); i++) {
+
                     JSONObject jObject = jArray.getJSONObject(i);
-                    String nombreEvento=jObject.getString("nombre");
-                    listaEventos.add(nombreEvento);
-                }
+
+                    String name = jObject.getString("nombre");
+                    listaEventos.add(name);
+                    //String tab1_text = jObject.getString("tab1_text");
+                    //int active = jObject.getInt("active");
+
+                } // End Loop
                 this.progressDialog.dismiss();
             }catch(JSONException e){
                 Log.e("JSONException","Error: "+e.toString());
             }
 
-            ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,listaEventos);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,
+                    listaEventos);
             lvEventos.setAdapter(arrayAdapter);
+
+            lvEventos.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                    Intent intent = new Intent(view.getContext(),DetalleEventoActivity.class);
+                    datoLista = (String) lvEventos.getItemAtPosition(position);
+                    intent.putExtra("Dato1",datoLista);
+                    startActivity(intent);
+                }
+            });
+        }
+
+
+
+    }
+
+
+
+    class FillSpinner extends AsyncTask<String,String, Void> {
+        private ProgressDialog progressDialog=new ProgressDialog(EventosActivity.this);
+        InputStream inputStream=null;
+        String result="";
+
+
+        public FillSpinner(){
+
+        }
+
+        protected void onPreExecute(){
+            progressDialog.setMessage("Downloading your data...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    FillSpinner.this.cancel(true);
+                }
+            });
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params){
+            try{
+
+
+                //String UrlConvert=URLEncoder.encode(selected, "utf-8");
+                URL Url=new URL("https://venalau.azurewebsites.net/api/tipoEvento/findall");
+                //Log.d("URL","http://mascotasu.azurewebsites.net/api/datos/find/"+UrlConvert);
+                HttpURLConnection connection=(HttpURLConnection) Url.openConnection();
+                InputStream is=connection.getInputStream();
+                BufferedReader br=new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb=new StringBuilder();
+                String line;
+                while((line=br.readLine())!=null){
+                    sb.append(line);
+                }
+                connection.disconnect();
+                is.close();
+                result=sb.toString();
+
+
+
+            }catch(Exception e){
+                Log.e("StringBuilding","Error converting result "+e.toString());
+            }
+            return null;
+        }
+
+
+        protected  void onPostExecute(Void v){
+            /*List<String> listaEventos=new ArrayList<>();
+            try{
+                JSONObject jObject = new JSONObject(result);
+                String nombreEvento=jObject.getString("nombre");
+                listaEventos.add(nombreEvento);
+                this.progressDialog.dismiss();
+            }catch(JSONException e){
+                Log.e("JSONException","Error: "+e.toString());
+            }
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,
+                    listaEventos);
+            lvEventos.setAdapter(arrayAdapter);*/
+
+            List<String> lista= new ArrayList<>();
+            try {
+                JSONArray jArray = new JSONArray(result);
+                for(int i=0; i < jArray.length(); i++) {
+
+                    JSONObject jObject = jArray.getJSONObject(i);
+
+                    String name = jObject.getString("tipoEvento");
+                    lista.add(name);
+                    //String tab1_text = jObject.getString("tab1_text");
+                    //int active = jObject.getInt("active");
+
+                } // End Loop
+                this.progressDialog.dismiss();
+            } catch (JSONException e) {
+                Log.e("JSONException", "Error: " + e.toString());
+            }
+
+            /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,
+                    lista);
+
+            lvEventos.setAdapter(arrayAdapter);*/
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,
+                    lista);
+
+            mySpinner.setAdapter(arrayAdapter);
+
+
         }
 
     }
+
+
+
 }

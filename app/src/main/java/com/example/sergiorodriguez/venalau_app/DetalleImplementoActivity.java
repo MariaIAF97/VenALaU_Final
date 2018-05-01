@@ -22,25 +22,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class DetalleEventoActivity extends AppCompatActivity {
+public class DetalleImplementoActivity extends AppCompatActivity {
 
-    String datoNombre;
-    TextView nombres, fechas, detalles, lugars;
+    String datoNombre, datoActividad;
+    TextView nombres, cantidad, actividad;
     FillList seventos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_evento);
+        setContentView(R.layout.activity_detalle_implemento);
 
         Intent intencion=getIntent();
         Bundle extras=intencion.getExtras();
         datoNombre=extras.getString("Dato1");
+        datoActividad= extras.getString("Dato2");
 
-        nombres=(TextView)findViewById(R.id.txtNombreEvento);
-        fechas = findViewById(R.id.txtFechaEvento);
-        detalles = findViewById(R.id.txtDescripcionEvento);
-        lugars = findViewById(R.id.txtLugarEvento);
+        nombres=(TextView)findViewById(R.id.txtImplemento);
+        actividad = findViewById(R.id.txtActividad);
+        cantidad = findViewById(R.id.txtCantidad);
+
         nombres.setText(datoNombre);
+        actividad.setText(datoActividad);
 
         seventos = new FillList();
         seventos.execute();
@@ -56,7 +59,7 @@ public class DetalleEventoActivity extends AppCompatActivity {
     }
 
     class FillList extends AsyncTask<String,String, Void> {
-        private ProgressDialog progressDialog=new ProgressDialog(DetalleEventoActivity.this);
+        private ProgressDialog progressDialog=new ProgressDialog(DetalleImplementoActivity.this);
         InputStream inputStream=null;
         String result="";
 
@@ -83,7 +86,7 @@ public class DetalleEventoActivity extends AppCompatActivity {
 
 
                 String UrlConvert= URLEncoder.encode(datoNombre, "utf-8");
-                URL Url=new URL("https://venalau.azurewebsites.net/api/eventos/findEv/"+UrlConvert);
+                URL Url=new URL("https://venalau.azurewebsites.net/api/implementos/find/"+UrlConvert);
                 //Log.d("URL","https://venalau.azurewebsites.net/api/evento/find/"+UrlConvert);
                 HttpURLConnection connection=(HttpURLConnection) Url.openConnection();
                 InputStream is=connection.getInputStream();
@@ -108,15 +111,12 @@ public class DetalleEventoActivity extends AppCompatActivity {
 
         protected  void onPostExecute(Void v){
 
-            String fecha ="", detalle="",lugar="";
+            String cantidads ="";
             try{
                 JSONArray jArray = new JSONArray(result);
                 for(int i=0; i < jArray.length(); i++) {
                     JSONObject jObject = jArray.getJSONObject(i);
-                    String nombreEvento = jObject.getString("nombre");
-                    fecha = jObject.getString("fecha");
-                    detalle = jObject.getString("detalle");
-                    lugar = jObject.getString("lugar");
+                    cantidads = jObject.getString("cantidad");
                 }
                 this.progressDialog.dismiss();
 
@@ -125,18 +125,9 @@ public class DetalleEventoActivity extends AppCompatActivity {
                 Log.e("JSONException","Error: "+e.toString());
             }
 
-            fechas.setText(fecha);
-            fechas.setTextColor(Color.BLACK);
-            detalles.setText(detalle);
-            detalles.setTextColor(Color.BLACK);
-            lugars.setText(lugar);
-            lugars.setTextColor(Color.BLACK);
-
+            cantidad.setText(cantidads);
 
         }
-
-
-
     }
 
 }
