@@ -56,8 +56,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventosActivity" />
-        <activity android:name=".IniciarSesionActivity"></activity>
+        <activity
+            android:name=".EventosActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".IniciarSesionActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".IniciarSesionEC"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

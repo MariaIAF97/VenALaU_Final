@@ -44,23 +44,33 @@ import java.util.List;
 public class ReservasActivity extends AppCompatActivity {
     Spinner spEspacio;
     FillList espacios;
+    FillListDatos datos;
     private TextView txtFecha,txtHora,txtId,txtNombre,txtApellido;
     Button btnReserva;
     int horas,minutos;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mHourSetListener;
     String horaFecha;
+    String idUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("creado","creado");
         setContentView(R.layout.activity_reservas);
+        Intent intent=getIntent();
+        Bundle extras=intent.getExtras();
+        datos=new FillListDatos();
+        datos.execute();
+
+        idUsuario=extras.getString("id");
+
         spEspacio=(Spinner) findViewById(R.id.spEspacio);
         Log.d("creado","creado");
         espacios=new FillList();
         espacios.execute();
         txtId=(TextView)findViewById(R.id.txtIdReserva);
+        txtId.setText(idUsuario);
         btnReserva=(Button)findViewById(R.id.btnReservar);
         txtNombre=(TextView)findViewById(R.id.txtNombreReserva);
         txtApellido=(TextView)findViewById(R.id.txtApellidoReserva);
@@ -147,8 +157,10 @@ public class ReservasActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
+    //Llenado del Spinner
     class FillList extends AsyncTask<String,String,Void> {
         private ProgressDialog progressDialog=new ProgressDialog(ReservasActivity.this);
         InputStream inputStream=null;
@@ -253,5 +265,78 @@ public class ReservasActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
+
+    //Carga de datos de pantalla inicio de sesión
+    class FillListDatos extends AsyncTask<String,String,Void> {
+        private ProgressDialog progressDialog=new ProgressDialog(ReservasActivity.this);
+        InputStream inputStream=null;
+        String result="";
+
+        public FillListDatos(){
+
+        }
+
+        protected void onPreExecute(){
+            progressDialog.setMessage("Downloading your data...");
+            progressDialog.show();
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    FillListDatos.this.cancel(true);
+                }
+            });
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params){
+            try{
+                URL Url=new URL("http://venalau.azurewebsites.net/api/persona/find/"+idUsuario);
+                HttpURLConnection connection=(HttpURLConnection) Url.openConnection();
+                InputStream is=connection.getInputStream();
+                BufferedReader br=new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb=new StringBuilder();
+                String line;
+                while((line=br.readLine())!=null){
+                    sb.append(line);
+                }
+                connection.disconnect();
+                is.close();
+                result=sb.toString();
+
+
+
+            }catch(Exception e){
+                Log.e("StringBuilding","Error converting result "+e.toString());
+            }
+            return null;
+        }
+
+
+        protected  void onPostExecute(Void v){
+            List<String> lista=new ArrayList<>();
+            String nombre="";
+            String apellido="";
+            try{
+                JSONArray jArray=new JSONArray(result);
+                for(int i=0;i<jArray.length();i++){
+                    JSONObject jObject = jArray.getJSONObject(i);
+                    nombre=jObject.getString("nombre");
+                    apellido=jObject.getString("apellido");
+
+                }
+                this.progressDialog.dismiss();
+            }catch(JSONException e){
+                Log.e("JSONException","Error: "+e.toString());
+            }
+
+            txtNombre.setText(nombre);
+            txtApellido.setText(apellido);
+
+
+        }
+
+    }
+
 
 }

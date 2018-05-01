@@ -43,7 +43,7 @@ public class DeportesHomeActivity extends AppCompatActivity {
         llCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =new Intent(DeportesHomeActivity.this,EstadoCuentaActivity.class);
+                Intent intent =new Intent(DeportesHomeActivity.this,IniciarSesionEC.class);
                 startActivity(intent);
             }
         });

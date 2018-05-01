@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EstadoCuentaActivity"
+    tools:context="com.example.sergiorodriguez.venalau_app.IniciarSesionEC"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="50dp">
 
 
         <TextView
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estado de Cuenta"
+            android:text="Inicia sesión para acceder a todas las funcionalidades de VenALaU"
             android:textColor="#000000"
             android:textSize="15dp" />
 
@@ -41,42 +41,28 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/txtNombreEC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="Nombre" />
-
-        <EditText
-            android:id="@+id/txtApellidoEC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="Apellido" />
-
-        <EditText
-            android:id="@+id/txtIDEC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
+            android:id="@+id/txtIDISE"
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:drawableLeft="@drawable/ic_icon_user"
             android:hint="ID Institucional" />
 
         <EditText
-            android:id="@+id/txtMultasEC"
+            android:id="@+id/txtContISE"
+            android:layout_width="350dp"
+            android:layout_height="80dp"
+            android:drawableLeft="@drawable/ic_icon_pass"
+            android:hint="Contraseña"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btnIniciarSesionE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="Multas" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Reservas activas" />
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></ListView>
-
+            android:layout_marginTop="40dp"
+            android:background="@drawable/buttonstylegreen"
+            android:text="Iniciar Sesión"
+            android:textColor="#fff" />
 
     </LinearLayout>
 

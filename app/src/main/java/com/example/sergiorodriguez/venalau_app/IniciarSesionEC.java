@@ -1,7 +1,6 @@
 package com.example.sergiorodriguez.venalau_app;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -14,28 +13,29 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class IniciarSesionActivity extends AppCompatActivity {
+public class IniciarSesionEC extends AppCompatActivity {
+
     Button btnIniciarSesion;
     TextView txtUsuario;
     TextView txtContraseña;
     Connection con;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_iniciar_sesion);
+        setContentView(R.layout.activity_iniciar_sesion_ec);
 
-        btnIniciarSesion=(Button)findViewById(R.id.btnIniciarSesion);
-        txtUsuario=(TextView)findViewById(R.id.txtIDIS) ;
-        txtContraseña=(TextView)findViewById(R.id.txtContIS);
+        btnIniciarSesion=(Button)findViewById(R.id.btnIniciarSesionE);
+        txtUsuario=(TextView)findViewById(R.id.txtIDISE) ;
+        txtContraseña=(TextView)findViewById(R.id.txtContISE);
 
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckLogin checkLogin = new CheckLogin();// this is the Asynctask, which is used to process in background to reduce load on app process
+                IniciarSesionEC.CheckLogin checkLogin = new IniciarSesionEC.CheckLogin();// this is the Asynctask, which is used to process in background to reduce load on app process
                 checkLogin.execute("");
 
             }
@@ -45,7 +45,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
     }
     public class CheckLogin extends AsyncTask<String,String,String>
     {
-        private ProgressDialog progressDialog = new ProgressDialog(IniciarSesionActivity.this);
+        private ProgressDialog progressDialog = new ProgressDialog(IniciarSesionEC.this);
         String z = "";
         Boolean isSuccess = false;
 
@@ -60,10 +60,10 @@ public class IniciarSesionActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String r)
         {
-            Toast.makeText(IniciarSesionActivity.this, r, Toast.LENGTH_SHORT).show();
+            Toast.makeText(IniciarSesionEC.this, r, Toast.LENGTH_SHORT).show();
             if(isSuccess)
             {
-                Toast.makeText(IniciarSesionActivity.this , "Login Successfull" , Toast.LENGTH_LONG).show();
+                Toast.makeText(IniciarSesionEC.this , "Login Successfull" , Toast.LENGTH_LONG).show();
                 //finish();
             }
         }
@@ -91,10 +91,10 @@ public class IniciarSesionActivity extends AppCompatActivity {
                         ResultSet rs = stmt.executeQuery(query);
                         if(rs.next())
                         {
-                            z = "Inicio de sesión satisfactorio";
+                            z = "Inicio de sesión correcto";
                             isSuccess=true;
                             con.close();
-                            Intent intent =new Intent(IniciarSesionActivity.this,ReservasActivity.class);
+                            Intent intent =new Intent(IniciarSesionEC.this,EstadoCuentaActivity.class);
                             intent.putExtra("id",txtUsuario.getText().toString());
                             startActivity(intent);
                         }
