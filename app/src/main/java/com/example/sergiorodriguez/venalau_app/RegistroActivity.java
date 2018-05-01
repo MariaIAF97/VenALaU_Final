@@ -41,6 +41,7 @@ public class RegistroActivity extends AppCompatActivity {
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spVinculos.setAdapter(spinner_adapter);
 
+        
 
 
     }
