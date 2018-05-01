@@ -39,6 +39,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class IniciarSesionActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    Boolean incorrectPass=false;
+    String usuario;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -346,5 +348,6 @@ public class IniciarSesionActivity extends AppCompatActivity implements LoaderCa
             showProgress(false);
         }
     }
+
 }
 
