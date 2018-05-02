@@ -71,11 +71,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             tools:text="Reservas activas" />
+
         <ListView
+            android:id="@+id/lvReservas"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            ></ListView>
+            android:layout_height="match_parent"></ListView>
 
 
     </LinearLayout>

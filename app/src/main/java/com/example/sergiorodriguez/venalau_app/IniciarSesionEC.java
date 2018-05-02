@@ -17,20 +17,18 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class IniciarSesionEC extends AppCompatActivity {
-
     Button btnIniciarSesion;
-    TextView txtUsuario;
-    TextView txtContraseña;
+    TextView txUsuario;
+    TextView txContraseña;
     Connection con;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_sesion_ec);
 
         btnIniciarSesion=(Button)findViewById(R.id.btnIniciarSesionE);
-        txtUsuario=(TextView)findViewById(R.id.txtIDISE) ;
-        txtContraseña=(TextView)findViewById(R.id.txtContISE);
+        txUsuario=(TextView)findViewById(R.id.txtIDISE) ;
+        txContraseña=(TextView)findViewById(R.id.txtContISE);
 
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,15 +61,15 @@ public class IniciarSesionEC extends AppCompatActivity {
             Toast.makeText(IniciarSesionEC.this, r, Toast.LENGTH_SHORT).show();
             if(isSuccess)
             {
-                Toast.makeText(IniciarSesionEC.this , "Login Successfull" , Toast.LENGTH_LONG).show();
+                //Toast.makeText(IniciarSesionEC.this , "Login Successfull" , Toast.LENGTH_LONG).show();
                 //finish();
             }
         }
         @Override
         protected String doInBackground(String... params)
         {
-            String usernam = txtUsuario.getText().toString();
-            String passwordd = txtContraseña.getText().toString();
+            String usernam = txUsuario.getText().toString();
+            String passwordd = txContraseña.getText().toString();
             if(usernam.trim().equals("")|| passwordd.trim().equals(""))
                 z = "Please enter Username and Password";
             else
@@ -91,11 +89,11 @@ public class IniciarSesionEC extends AppCompatActivity {
                         ResultSet rs = stmt.executeQuery(query);
                         if(rs.next())
                         {
-                            z = "Inicio de sesión correcto";
+                            z = "Inicio de sesión satisfactorio";
                             isSuccess=true;
                             con.close();
                             Intent intent =new Intent(IniciarSesionEC.this,EstadoCuentaActivity.class);
-                            intent.putExtra("id",txtUsuario.getText().toString());
+                            intent.putExtra("id",txUsuario.getText().toString());
                             startActivity(intent);
                         }
                         else

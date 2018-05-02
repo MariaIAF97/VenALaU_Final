@@ -153,7 +153,16 @@ public class ReservasActivity extends AppCompatActivity {
 
 
                 //startActivity(intent);
-                agregarReserva();
+                Intent intent=new Intent(v.getContext(),ConfirmacionActivity.class);
+                intent.putExtra("id",txtId.getText().toString());
+                intent.putExtra("nombre",txtNombre.getText().toString());
+                intent.putExtra("apellido",txtApellido.getText().toString());
+                intent.putExtra("tipoEspacio",spEspacio.getSelectedItem().toString());
+                intent.putExtra("idEspacio",spEspacio.getSelectedItemPosition()+1);
+                intent.putExtra("fecha",txtFecha.getText().toString());
+                intent.putExtra("hora",txtHora.getText().toString());
+
+                startActivity(intent);
             }
         });
 
@@ -228,7 +237,7 @@ public class ReservasActivity extends AppCompatActivity {
     }
 
     //Insertar reserva
-    public Connection conexionDB(){
+    /*public Connection conexionDB(){
         Connection conexion = null;
         try{
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -243,7 +252,7 @@ public class ReservasActivity extends AppCompatActivity {
         return conexion;
     }
 
-    public void agregarReserva(){
+   public void agregarReserva(){
         horaFecha=txtFecha.getText().toString()+" "+txtHora.getText().toString();
 
         try{
@@ -259,12 +268,16 @@ public class ReservasActivity extends AppCompatActivity {
             pst.executeUpdate();
 
             conexionDB().close();
+
+
+
+
         }
 
         catch(SQLException ex){
             Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     //Carga de datos de pantalla inicio de sesión
     class FillListDatos extends AsyncTask<String,String,Void> {

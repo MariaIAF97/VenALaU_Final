@@ -39,6 +39,9 @@
             android:name=".IniciarSesionActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".IniciarSesionEC"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".RegistroActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -53,8 +56,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EventosActivity" />
-        <activity android:name=".DetalleImplementoActivity"></activity>
+        <activity android:name=".EventosActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DetalleImplementoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

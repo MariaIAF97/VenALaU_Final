@@ -82,12 +82,13 @@
             android:hint="Lugar" />
 
         <Button
-            android:layout_marginTop="40dp"
+            android:id="@+id/btnConfirmar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:background="@drawable/buttonstylegreen"
-            android:text="Iniciar Sesión"
-            android:textColor="#fff"/>
+            android:text="CONFIRMAR RESERVA"
+            android:textColor="#fff" />
 
 
     </LinearLayout>

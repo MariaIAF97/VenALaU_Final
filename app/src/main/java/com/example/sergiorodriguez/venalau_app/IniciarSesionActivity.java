@@ -63,7 +63,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
             Toast.makeText(IniciarSesionActivity.this, r, Toast.LENGTH_SHORT).show();
             if(isSuccess)
             {
-                Toast.makeText(IniciarSesionActivity.this , "Login Successfull" , Toast.LENGTH_LONG).show();
+                //Toast.makeText(IniciarSesionActivity.this , "Login Successfull" , Toast.LENGTH_LONG).show();
                 //finish();
             }
         }

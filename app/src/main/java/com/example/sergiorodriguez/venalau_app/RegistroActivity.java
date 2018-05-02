@@ -2,11 +2,13 @@ package com.example.sergiorodriguez.venalau_app;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,7 +30,9 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +48,6 @@ public class RegistroActivity extends AppCompatActivity {
     EditText etCont;
     //EditText CantMul;
     Button btnRegistrarse;
-    String contenidoSpinner;
     Spinner spVinculos;
     FillList vinculos;
 
@@ -67,6 +70,8 @@ public class RegistroActivity extends AppCompatActivity {
         spVinculos=(Spinner)findViewById(R.id.spVinculo);
         //CantMul = (EditText)findViewById(R.id.txCantMul);
         btnRegistrarse = (Button)findViewById(R.id.btnRegistrarse);
+
+
         btnRegistrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,10 +119,26 @@ public class RegistroActivity extends AppCompatActivity {
             pst.executeUpdate();
 
             conexionDB().close();
+
+            Toast toast1 = Toast.makeText(getApplicationContext(), "Registro satisfactorio", Toast.LENGTH_SHORT);
+            toast1.setGravity(Gravity.CENTER, 0, 0);
+            toast1.show();
+
+            Intent intent =new Intent(RegistroActivity.this,MainActivity.class);
+            startActivity(intent);
+
+
         }
 
-        catch(SQLException ex){
-            Toast.makeText(getApplicationContext(), ex.getMessage(),Toast.LENGTH_SHORT).show();
+        catch(Exception e){
+            Toast.makeText(getApplicationContext(),"Error en el registro",Toast.LENGTH_SHORT).show();
+
+            /*if(etNombre.getText()==null||etApellido.getText()==null||etCorreo.getText()==null||etCont.getText()==null){
+                Toast.makeText(getApplicationContext(),"Por favor llene todos los datos",Toast.LENGTH_SHORT).show();
+
+            }*/
+
+
         }
     }
 
